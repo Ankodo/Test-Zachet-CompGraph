@@ -51,7 +51,7 @@ namespace Directx_Light
 
         public void CameraPositioning()
         {
-            
+
             device.Transform.Projection = Matrix.PerspectiveFovLH((float)Math.PI / 4, (float)this.Width / (float)this.Height, 0.1f, 100f);
             device.Transform.View = Matrix.LookAtLH(new Vector3(20f, 20f, 20f),
                                         new Vector3(0, 0, 0),
@@ -67,19 +67,19 @@ namespace Directx_Light
 
         public void VertexDeclaration()
         {
-            vb = new VertexBuffer(typeof(CustomVertex.PositionNormalColored), 12, device, Usage.Dynamic | Usage.WriteOnly, CustomVertex.PositionNormalColored.Format, Pool.Default);
-            
+            vb = new VertexBuffer(typeof(CustomVertex.PositionNormalColored), 8, device, Usage.Dynamic | Usage.WriteOnly, CustomVertex.PositionNormalColored.Format, Pool.Default);
+
             //вершины содержат координаты, нормаль и цвет
-            vertices = new CustomVertex.PositionNormalColored[12];
+            vertices = new CustomVertex.PositionNormalColored[8];
             vertices[0] = new CustomVertex.PositionNormalColored(5f, 0f, 0f, 0f, 0f, 1f, Color.Cyan.ToArgb());
             vertices[1] = new CustomVertex.PositionNormalColored(0f, 4f, 0f, 0f, 0f, 1f, Color.Red.ToArgb());
             vertices[2] = new CustomVertex.PositionNormalColored(-3f, 0f, 0f, 0f, 0f, 1f, Color.Blue.ToArgb());
             vertices[3] = new CustomVertex.PositionNormalColored(0f, -2f, 0f, 0f, 0f, 1f, Color.Magenta.ToArgb());
 
-            vertices[4] = new CustomVertex.PositionNormalColored(5f, 0f, 0f, 0f, 0f, 1f, Color.Cyan.ToArgb());
-            vertices[5] = new CustomVertex.PositionNormalColored(0f, 4f, 0f, 0f, 0f, 1f, Color.Red.ToArgb());
-            vertices[6] = new CustomVertex.PositionNormalColored(-3f, 0f, 0f, 0f, 0f, 1f, Color.Blue.ToArgb());
-            vertices[7] = new CustomVertex.PositionNormalColored(0f, -2f, 0f, 0f, 0f, 1f, Color.Magenta.ToArgb());
+            vertices[4] = new CustomVertex.PositionNormalColored(5f, 0f, 0f, 0f, 0f, -1f, Color.Green .ToArgb());
+            vertices[5] = new CustomVertex.PositionNormalColored(0f, 4f, 0f, 0f, 0f, -1f, Color.DarkCyan.ToArgb());
+            vertices[6] = new CustomVertex.PositionNormalColored(-3f, 0f, 0f, 0f, 0f, -1f, Color.LightBlue.ToArgb());
+            vertices[7] = new CustomVertex.PositionNormalColored(0f, -2f, 0f, 0f, 0f, -1f, Color.DarkGray.ToArgb());
 
 
             vb.SetData(vertices, 0, LockFlags.None);
@@ -88,7 +88,7 @@ namespace Directx_Light
             ib = new IndexBuffer(typeof(int), 12, device, Usage.WriteOnly, Pool.Default);
             indices = new int[12];
 
-            //дно - по часовой стрелке
+            
             indices[0] = 0;
             indices[1] = 1;
             indices[2] = 3;
@@ -122,14 +122,14 @@ namespace Directx_Light
             //установка вершин и индексов, показывающих как из них построить поверхность
             device.SetStreamSource(0, vb, 0);
             device.Indices = ib;
-            device.Transform.World = Matrix.RotationAxis(new Vector3(-1f, 1f, 0f),angle);
+            device.Transform.World = Matrix.RotationAxis(new Vector3(-1f, 1f, 0f), angle);
             //отрисовка индексированных фигур
             device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 8, 0, 4);
 
             device.EndScene();
 
             device.Present();
-           
+
             this.Invalidate();
 
             angle += 0.01f;
