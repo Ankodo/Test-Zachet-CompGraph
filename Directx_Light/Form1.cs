@@ -67,15 +67,20 @@ namespace Directx_Light
 
         public void VertexDeclaration()
         {
-            vb = new VertexBuffer(typeof(CustomVertex.PositionNormalColored), 4, device, Usage.Dynamic | Usage.WriteOnly, CustomVertex.PositionNormalColored.Format, Pool.Default);
+            vb = new VertexBuffer(typeof(CustomVertex.PositionNormalColored), 12, device, Usage.Dynamic | Usage.WriteOnly, CustomVertex.PositionNormalColored.Format, Pool.Default);
             
             //вершины содержат координаты, нормаль и цвет
-            vertices = new CustomVertex.PositionNormalColored[4];
+            vertices = new CustomVertex.PositionNormalColored[12];
             vertices[0] = new CustomVertex.PositionNormalColored(5f, 0f, 0f, 0f, 0f, 1f, Color.Cyan.ToArgb());
             vertices[1] = new CustomVertex.PositionNormalColored(0f, 4f, 0f, 0f, 0f, 1f, Color.Red.ToArgb());
             vertices[2] = new CustomVertex.PositionNormalColored(-3f, 0f, 0f, 0f, 0f, 1f, Color.Blue.ToArgb());
             vertices[3] = new CustomVertex.PositionNormalColored(0f, -2f, 0f, 0f, 0f, 1f, Color.Magenta.ToArgb());
-            
+
+            vertices[4] = new CustomVertex.PositionNormalColored(5f, 0f, 0f, 0f, 0f, 1f, Color.Cyan.ToArgb());
+            vertices[5] = new CustomVertex.PositionNormalColored(0f, 4f, 0f, 0f, 0f, 1f, Color.Red.ToArgb());
+            vertices[6] = new CustomVertex.PositionNormalColored(-3f, 0f, 0f, 0f, 0f, 1f, Color.Blue.ToArgb());
+            vertices[7] = new CustomVertex.PositionNormalColored(0f, -2f, 0f, 0f, 0f, 1f, Color.Magenta.ToArgb());
+
 
             vb.SetData(vertices, 0, LockFlags.None);
 
@@ -86,17 +91,17 @@ namespace Directx_Light
             //дно - по часовой стрелке
             indices[0] = 0;
             indices[1] = 1;
-            indices[2] = 2;
-            indices[3] = 0;
+            indices[2] = 3;
+            indices[3] = 1;
             indices[4] = 2;
             indices[5] = 3;
 
-            indices[6] = 0;
-            indices[7] = 1;
-            indices[8] = 2;
-            indices[9] = 0;
-            indices[10] = 2;
-            indices[11] = 3;
+            indices[6] = 4;
+            indices[7] = 7;
+            indices[8] = 5;
+            indices[9] = 5;
+            indices[10] = 7;
+            indices[11] = 6;
 
             ib.SetData(indices, 0, LockFlags.None);
 
@@ -119,7 +124,7 @@ namespace Directx_Light
             device.Indices = ib;
             device.Transform.World = Matrix.RotationAxis(new Vector3(-1f, 1f, 0f),angle);
             //отрисовка индексированных фигур
-            device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 5, 0, 3);
+            device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 8, 0, 4);
 
             device.EndScene();
 
